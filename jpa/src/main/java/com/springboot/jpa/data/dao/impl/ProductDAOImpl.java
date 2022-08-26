@@ -40,7 +40,7 @@ public class ProductDAOImpl implements ProductDAO {
 			Product product = selectedProduct.get();
 			product.setName(name);
 			product.setUpdateAt(LocalDateTime.now());
-			
+
 			updatedProduct = productRepository.save(product);
 		} else {
 			throw new Exception();
@@ -50,7 +50,14 @@ public class ProductDAOImpl implements ProductDAO {
 
 	@Override
 	public void deleteProduct(Long number) throws Exception {
-		// TODO Auto-generated method stub
+		Optional<Product> selectedProduct = productRepository.findById(number);
+		if (selectedProduct.isPresent()) {
+			Product product = selectedProduct.get();
+
+			productRepository.delete(product);
+		} else {
+			throw new Exception();
+		}
 
 	}
 
